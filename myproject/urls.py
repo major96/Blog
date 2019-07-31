@@ -14,8 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.conf.urls import url
+from django.urls import path 
+from blog.views import CreatePostView, PostListView, PostDetailView, PostUpdateView, PostDeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url('^$', PostListView.as_view(), name='post-list'),
+    url('^create/$', CreatePostView.as_view(), name='post-create'),
+    url('^(?P<pk>\d+)/$', PostDetailView.as_view(), name='post-detail'),
+    url('^update/(?P<pk>\d+)/$', PostUpdateView.as_view(), name='post-update'),
+    url('^delete/(?P<pk>\d+)/$', PostDeleteView.as_view(), name='post-delete'),  
 ]
